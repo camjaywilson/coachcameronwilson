@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thank You — AI Assistant Guide</title>
+  <style>
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background-color: #FFFFFF;
+      color: #1F2D3D;
+      margin: 0;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      flex-direction: column;
+    }
+    .container {
+      max-width: 700px;
+      width: 100%;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    p {
+      color: #4A5568;
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    input {
+      padding: 0.5rem;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      width: 80%;
+      max-width: 300px;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      background-color: #E53E3E;
+      color: #fff;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    iframe {
+      width: 700px;
+      max-width: 100%;
+      height: 450px;
+      border: none;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="gate">
+      <h1>Thanks for grabbing the AI Assistant Guide!</h1>
+      <p>To protect the download, please enter your access key.</p>
+      <p><em>If you just purchased, check your email — the key was included in your confirmation.</em></p>
+      <input type="text" id="accessKeyInput" placeholder="Enter access key" />
+      <br />
+      <button onclick="unlockContent()">Unlock Guide</button>
+    </div>
+
+    <div id="content" style="display: none;">
+      <iframe src="https://gamma.app/embed/amxcplb0uhxa01q" allow="fullscreen" title="Creating Your Custom AI Newsletter Assistant"></iframe>
+    </div>
+  </div>
+
+  <script>
+    function unlockContent() {
+      const enteredKey = document.getElementById("accessKeyInput").value;
+      const validKey = "coachai1375"; // Change to your actual key
+
+      if (enteredKey === validKey) {
+        document.getElementById("gate").style.display = "none";
+        document.getElementById("content").style.display = "block";
+      } else {
+        alert("Invalid key. If you believe this is an error, contact support@yourdomain.com.");
+      }
+    }
+  </script>
+</body>
+</html>
