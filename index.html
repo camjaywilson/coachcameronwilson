@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Assistant Setup Manual</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+    
     body {
       margin: 0;
       font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -12,138 +16,498 @@
       color: #1F2D3D;
       line-height: 1.6;
     }
+    
     header, section, footer {
       padding: 3rem 1rem;
       max-width: 800px;
       margin: auto;
     }
+    
     h1, h2, h3 {
       color: #1F2D3D;
+      margin-top: 0;
     }
+    
     .hero {
-      background-color: #F9FAFB;
+      background: linear-gradient(135deg, #1F2D3D 0%, #2D3748 100%);
+      text-align: center;
+      max-width: none;
+      margin: 0;
+      padding: 4rem 1rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      pointer-events: none;
+    }
+    
+    .hero-content {
+      max-width: 800px;
+      margin: auto;
+      position: relative;
+      z-index: 1;
       text-align: center;
     }
+    
     .hero h1 {
-      font-size: 2rem;
+      font-size: 2.5rem;
       margin-bottom: 1rem;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
+    
     .hero p {
       font-size: 1.25rem;
-      color: #4A5568;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 1.5rem;
     }
+    
+    .subheadline {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 2rem;
+    }
+    
+    .hero-features {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+    
+    .hero-feature {
+      background: rgba(255,255,255,0.1);
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    
     .cta-button {
       display: inline-block;
       margin: 1.5rem 0;
-      padding: 1rem 2rem;
-      background-color: #E53E3E;
+      padding: 1.2rem 2.5rem;
+      background: linear-gradient(45deg, #E53E3E, #DC2626);
       color: #fff;
       text-decoration: none;
-      border-radius: 6px;
+      border-radius: 8px;
       font-weight: bold;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
+    
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(229, 62, 62, 0.4);
+    }
+    
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .cta-button:hover::before {
+      left: 100%;
+    }
+    
+    .cta-price-subtext {
+      color: #D4AF37;
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      display: block;
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
+    
     .mini-bullets {
       font-size: 0.9rem;
-      color: #4A5568;
+      color: rgba(255,255,255,0.8);
+      margin-top: 1rem;
     }
+    
+    .urgency-banner {
+      background: linear-gradient(45deg, #E53E3E, #DC2626);
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-weight: bold;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .testimonial {
+      background: #F9FAFB;
+      border-left: 4px solid #E53E3E;
+      padding: 2rem;
+      margin: 2rem 0;
+      border-radius: 0 8px 8px 0;
+    }
+    
+    .testimonial-author {
+      font-weight: bold;
+      color: #1F2D3D;
+      margin-top: 1rem;
+    }
+    
+    .testimonial-title {
+      color: #4A5568;
+      font-size: 0.9rem;
+    }
+    
     .grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 1rem;
+      gap: 1.5rem;
     }
-    @media (min-width: 600px) {
-      .grid {
-        grid-template-columns: 1fr 1fr;
-      }
+    
+    .feature-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      border: 1px solid #E2E8F0;
+      transition: transform 0.3s ease;
     }
+    
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    }
+    
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    
+    .stats-section {
+      background: linear-gradient(135deg, #1F2D3D 0%, #2D3748 100%);
+      color: white;
+      text-align: center;
+      padding: 3rem 1rem;
+      margin: 0;
+      max-width: none;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #D4AF37;
+      display: block;
+    }
+    
+    .stat-label {
+      color: rgba(255,255,255,0.9);
+      font-size: 1.1rem;
+    }
+    
+    .guarantee-box {
+      background: linear-gradient(135deg, #D4AF37 0%, #F6E05E 100%);
+      color: #1F2D3D;
+      padding: 2rem;
+      border-radius: 12px;
+      text-align: center;
+      margin: 2.5rem auto;
+      box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+      max-width: 500px;
+      width: 100%;
+      display: block;
+    }
+    
+    .guarantee-box h3 {
+      color: #1F2D3D;
+      margin-top: 0;
+    }
+    
     footer {
       text-align: center;
       font-size: 0.9rem;
       color: #4A5568;
+      background: #F9FAFB;
+      margin: 0;
+      max-width: none;
     }
+    
     footer a {
       color: #4A5568;
       margin: 0 0.5rem;
       text-decoration: none;
     }
-    .subheadline {
-      font-size: 1.1rem;
-      color: #4A5568;
+    
+    footer a:hover {
+      color: #E53E3E;
+    }
+    
+    .risk-reversal {
+      background: #F0FFF4;
+      border: 2px solid #68D391;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+      text-align: center;
+    }
+    
+    .risk-reversal h3 {
+      color: #22543D;
+      margin-top: 0;
+    }
+    
+    .risk-reversal p {
+      color: #2F855A;
+      margin-bottom: 0;
     }
   </style>
 </head>
 <body>
+  <div class="urgency-banner">
+    🚀 LIMITED TIME: Get instant access to the AI Newsletter Assistant Guide for just $97
+  </div>
+
   <header class="hero">
-    <h1>Build Your Own AI Newsletter Assistant in Under 1 Hour</h1>
-    <p>Send better emails, stay top of mind, and never skip another newsletter again.</p>
-    <p class="subheadline">No more blank screens. No more procrastination.<br />Just follow the step-by-step guide and let AI do the writing — in your voice, for your clients.</p>
-    <ul style="list-style:none; padding:0;">
-      <li>📩 HTML-ready emails in 3–5 minutes</li>
-      <li>🧠 No tech skills needed</li>
-      <li>⌛ Build it once, use it forever</li>
-    </ul>
-    <a href="https://buy.stripe.com/test_xxx" class="cta-button">Get The Guide – $97</a>
-    <div class="mini-bullets">
-      <p>• Done-for-you setup prompts and templates<br />• Designed specifically for solo real estate agents<br />• Saves you hours every month on marketing</p>
+    <div class="hero-content">
+      <h1>The $500/Month Newsletter Problem (And the $97 Solution)</h1>
+      <p>How to get custom, professional newsletters done in 5 minutes without hiring a virtual assistant or learning complicated tech</p>
+      <p class="subheadline">Most agents either:<br>
+          Pay $500+/month for a VA to write newsletters<br>
+          Skip newsletters entirely (costing them closings)<br>
+Spend 4+ hours every month doing it themselves<br></p>
+        
+      <p>There is a better way and everyone is talking about it but no one is talking about how to do it. This guide will show you how to do it.</p>
+      
+      <!-- <div class="hero-features">
+        <div class="hero-feature">📩 HTML-ready emails in 3–5 minutes <br>🧠 No tech skills needed<br> ⌛ Build it once, use it forever</div>
+         <div class="hero-feature"></div>
+        <div class="hero-feature"></div>
+      </div> -->
+      
+      <div class="cta-price-badge-wrapper">
+        <a href="https://buy.stripe.com/fZucN56Ug8Rj0RBfljgrS00" class="cta-button">Start Saving $500/Month →</a>
+        <span class="cta-price-subtext">Only $97 for a limited time</span>
+      </div>
+      <!-- <div class="mini-bullets">
+        <p>• Done-for-you setup prompts and templates<br />• Designed specifically for solo real estate agents<br />• Saves you hours every month on marketing</p>
+      </div> -->
     </div>
   </header>
 
+  <section class="stats-section">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <span class="stat-number">45</span>
+        <div class="stat-label">Minutes to Setup</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">3-5</span>
+        <div class="stat-label">Minutes per Email</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">100%</span>
+        <div class="stat-label">Customizable</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="my-story" style="padding: 3rem 1rem; max-width: 800px; margin: 0 auto; font-family: sans-serif; color: #333;">
+    <h2 style="font-size: 2rem; margin-bottom: 1.5rem; text-align: center;">My Story: From Burned Out to AI-Powered</h2>
+  
+    <h3 style="color: #663399;">🧨 The Problem: The Newsletter Grind</h3>
+    <p>You know exactly what I'm talking about.</p>
+    <p>For years, I wrote newsletters — as an admin for a real estate team, as an agent for my own business, and eventually for my coaching clients. Every time, it was the same frustrating cycle.</p>
+    <p>Writing took hours. Proofreading slowed me down. And I hated how much time it stole from my week — time I could have spent with my family, time I could have spent growing my business.</p>
+    <p>When I first discovered AI, I was excited. It could proof my emails — great! But I wanted more. I wanted it to <strong>write the whole thing for me</strong>. That's where the real struggle began.</p>
+    <p>The output sounded robotic. I still had to rewrite everything. It felt like I had to manage a lazy intern instead of working with a real assistant. I was spending more time fixing AI's work than if I'd just written it myself.</p>
+  
+    <h3 style="color: #663399;">🔍 The Discovery: Cracking the Code</h3>
+    <p>I tested everything — wrote part of the content myself, let AI fill in the rest. Bought courses. Watched tutorials. Talked to ChatGPT like a crazy person.</p>
+    <p>It took months of trial and error. But eventually, I figured it out: how to <strong>train AI like a real assistant</strong>. One that could sound like me, follow my layout, and stop wasting my time.</p>
+    <p>You know that feeling when something finally clicks? That's exactly what happened. I realized I wasn't asking the right questions, wasn't giving AI the right instructions.</p>
+  
+    <h3 style="color: #663399;">🚀 The Transformation: Real Results, Fast</h3>
+    <p>Now I go from zero to a polished, ready-to-send newsletter in <strong>under 5 minutes</strong>. No stress. No procrastination. No skipped months.</p>
+    <p>The best part? It only took me 45 minutes to set the system up. One time setup, and now I have a newsletter assistant that works exactly how I want it to.</p>
+    <p>My family got their time back. My business got more consistent marketing. And I finally stopped dreading newsletter day.</p>
+  
+    <h3 style="color: #663399;">🎯 The Mission: Helping Solo Agents Market Smarter</h3>
+    <p>When I showed a few of the agents I coach, they had the same reaction I did.</p>
+    <p><em>"Wait... I set it up once, and it just builds my newsletters like that?"</em></p>
+    <p>Exactly. That's why I turned it into a step-by-step guide — so you can build your own AI-powered Newsletter Assistant without becoming a tech expert or hiring anyone.</p>
+    <p><strong>This is your shortcut to consistent, stress-free marketing — built for real estate pros who don't have time to waste.</strong></p>
+  
+    <p>If you're tired of spending hours on newsletters or paying hundreds for help that doesn't sound like you, this guide will show you exactly how to build your own AI assistant in 45 minutes.</p>
+  </section>
+
+  <!-- Story CTA Section -->
+  <section style="background: linear-gradient(135deg, #1F2D3D 0%, #2D3748 100%); color: white; text-align: center; padding: 3rem 1rem; margin: 0; max-width: none;">
+    <div style="max-width: 800px; margin: auto;">
+      <h2 style="color: white; margin-bottom: 1rem;">Ready to Build Your AI Newsletter Assistant?</h2>
+      <p style="font-size: 1.2rem; margin-bottom: 2rem; color: rgba(255,255,255,0.9);">Join the agents who've already stopped dreading newsletter day and started getting results in minutes, not hours.</p>
+      
+      <div style="margin: 2rem 0;">
+        <a href="https://buy.stripe.com/fZucN56Ug8Rj0RBfljgrS00" class="cta-button" style="background: linear-gradient(45deg, #E53E3E, #DC2626); color: white; padding: 1.2rem 2.5rem; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 1.1rem; display: inline-block; box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3); transition: all 0.3s ease;">Build My AI Assistant Now →</a>
+        <div style="color: #D4AF37; font-weight: bold; font-size: 1.1rem; margin-top: 0.5rem;">Only $97 - One-Time Investment</div>
+      </div>
+      
+      <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px; margin-top: 2rem;">
+        <p style="margin: 0; font-size: 0.9rem; color: rgba(255,255,255,0.8);">
+          ✅ Instant download • ✅ 45-minute setup • ✅ No monthly fees • ✅ Your voice, your style
+        </p>
+      </div>
+    </div>
+  </section>
+
   <section>
-    <h2>This Isn’t a Template — It’s a Fully Custom AI Assistant</h2>
-    <p>This downloadable guide walks you through how to build your own AI-powered Newsletter Assistant inside ChatGPT. In about 45 minutes, you’ll train it to write emails exactly how you would — or how you wish you could.</p>
-    <p>You’ll end up with a powerful, done-for-you tool that:</p>
-    <ul>
-      <li>Writes your newsletters in your tone and style</li>
-      <li>Automatically pulls content or asks you what to include</li>
-      <li>Delivers a ready-to-send HTML email in just minutes</li>
-    </ul>
-    <p>All without hiring a writer or assistant.</p>
+    <h2>This Isn't a Template — It's a Fully Custom AI Assistant</h2>
+    <p>This downloadable guide walks you through how to build your own AI-powered Newsletter Assistant inside ChatGPT. In about 45 minutes, you'll train it to write emails exactly how you would — or how you wish you could.</p>
+    <p>You'll end up with a powerful, done-for-you tool that:</p>
+    <div class="grid">
+      <div class="feature-card">
+        <span class="feature-icon">🎯</span>
+        <h3>Writes in Your Voice</h3>
+        <p>Your newsletters will sound exactly like you wrote them — because the AI learns your unique style and tone.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">⚡</span>
+        <h3>Lightning Fast</h3>
+        <p>Generate a complete, professional newsletter in just 3-5 minutes. No more staring at blank screens.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🎨</span>
+        <h3>Ready to Send</h3>
+        <p>Get HTML-formatted emails that look professional and are ready to send to your list immediately.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🔄</span>
+        <h3>Always Adaptable</h3>
+        <p>Update your assistant anytime as your business evolves. It grows with you.</p>
+      </div>
+    </div>
   </section>
 
   <section style="background:#F9FAFB;">
-    <h2>If You’re Like Most Solo Agents, This Probably Sounds Familiar…</h2>
-    <p>
-      ❌ You know you should send newsletters, but it never gets done</br>
-      ❌ You hate writing or overthink what to say</br>
-      ❌ You don’t have time to design and format emails</br>
-      ❌ You’ve tried templates, but they don’t sound like you</br>
-    </p>
-    <p class="subheadline">This fixes all of that — permanently.</p>
+    <h2>If You're Like Most Solo Agents, This Probably Sounds Familiar…</h2>
+    <div class="grid">
+      <div class="feature-card" style="background: white;">
+        <h3>❌ You know you should send newsletters, but it never gets done</h3>
+        <p>Life gets busy, and marketing always gets pushed to the bottom of the list.</p>
+      </div>
+      <div class="feature-card" style="background: white;">
+        <h3>❌ You hate writing or overthink what to say</h3>
+        <p>Writer's block is real, and it's costing you valuable client relationships.</p>
+      </div>
+      <div class="feature-card" style="background: white;">
+        <h3>❌ You don't have time to design and format emails</h3>
+        <p>Creating professional-looking emails takes hours you don't have.</p>
+      </div>
+      <div class="feature-card" style="background: white;">
+        <h3>❌ You've tried templates, but they don't sound like you</h3>
+        <p>Generic templates feel fake and don't build the trust your clients deserve.</p>
+      </div>
+    </div>
+    <p style="text-align: center; font-size: 1.2rem; color: #E53E3E; font-weight: bold; margin-top: 2rem;">This fixes all of that — permanently.</p>
   </section>
 
   <section>
-    <h2>What You’ll Get (and Why It’s So Easy)</h2>
+    <h2>What You'll Get (and Why It's So Easy)</h2>
     <div class="grid">
-      <p>✅ Step-by-step setup instructions (no guessing)</p>
-      <p>✅ Proven prompts for ChatGPT to build your Assistant</p>
-      <p>✅ Pre-formatted Newsletter Instructions template (just fill in)</p>
-      <p>✅ Customizable email layout with your colors, links & logo</p>
-      <p>✅ One-click AI newsletter creation in 3–5 minutes</p>
-      <p>✅ Fully editable — update any time as your content evolves</p>
+      <div class="feature-card">
+        <h3>📋 Step-by-step setup instructions</h3>
+        <p>No guessing or trial-and-error. Follow the exact process that works.</p>
+      </div>
+      <div class="feature-card">
+        <h3>🤖 Proven prompts for ChatGPT & Step-by-step Process</h3>
+        <p>Copy-paste prompts that build your perfect AI assistant. Follow the step-by-step process to get your AI assistant up and running.</p>
+      </div>
+      <div class="feature-card">
+        <h3>📝 Pre-formatted Newsletter Instructions</h3>
+        <p>Use the power of AI to create your newsletter instructions to teach your AI assistant what to do.</p>
+      </div>
+      <div class="feature-card">
+        <h3>🎨 Customizable email layout</h3>
+        <p>Your colors, links, logo, and branding included - because you will tell your AI assistant what to do. When you need changes or tweaks, explain it to your AI assistant and it will do it.</p>
+      </div>
+      <div class="feature-card">
+        <h3>⚡ One-click AI newsletter creation</h3>
+        <p>Your AI Assistant will know what to do so your email newsletters are complete in 3–5 minutes. You can have your AI Assistant create all of the newsletter or you can give it what you want to say and let it put it all together. It's your assistant, trait it how you want. </p>
+      </div>
+      <div class="feature-card">
+        <h3>🔄 Fully editable anytime</h3>
+        <p>Update as your content and business evolves. You can change it as fast as your business changes and improves.  </p>
+      </div>
     </div>
   </section>
 
   <section style="background:#F9FAFB;">
     <h2>From 0 to Done in Under an Hour — For Less Than the Cost of Paying An Assistant To Make Your Email</h2>
     <p>When I built this system for my own real estate business, it took me just 45 minutes to set up. The next morning, I built my first email in under 3 minutes — completely customized and ready to send.</p>
-    <p>This guide is everything I wish I had when I started. It’s the shortcut to showing up consistently without adding anything to your to-do list.</p>
+    <p>This guide is everything I wish I had when I started. It's the shortcut to showing up consistently without adding anything to your to-do list.</p>
+    
+    <div class="testimonial">
+      <p>"I was either spending 3-4 hours every month trying to write newsletters or skipping them entirely. I debated about hiring someone to do it for me. But now I create them in 5 minutes, and they sound more like me than ever. This guide paid for itself on the first email."</p>
+      <div class="testimonial-author">Katie M</div>
+      <div class="testimonial-title">Real Estate Agent, 8 years experience</div>
+    </div>
   </section>
 
   <section>
-    <h2>You Don’t Need to “Do More Marketing” — You Just Need a Smarter System</h2>
-    <p class="subheadline">Stop skipping your newsletter. Start staying top of mind.</p>
-    <a href="https://buy.stripe.com/test_xxx" class="cta-button">Get The Guide for $97</a>
-    <p class="mini-bullets">Instant download. One-time setup. Endless value.</p>
+    <h2>You Don't Need to "Do More Marketing" — You Just Need a Smarter System</h2>
+    <p style="text-align: center; font-size: 1.2rem; color: #4A5568; margin-bottom: 2rem;">Stop skipping your newsletter. Start staying top of mind.</p>
+    
+    <div style="text-align: center;">
+      <a href="https://buy.stripe.com/fZucN56Ug8Rj0RBfljgrS00" class="cta-button">Get The Guide Now →</a>
+      <span class="cta-price-subtext">Only $97</span>
+      <p class="mini-bullets" style="text-align: center;">Instant download. One-time setup. Endless value.</p>
+    </div>
   </section>
 
-  <section style="background:#FDF6E3;">
-    <h2>🎉 Bonus: Includes examples and my exact Assistant configuration so you don’t start from scratch.</h2>
+  <section class="guarantee-box">
+    <h3>🎉 Bonus: Includes examples and my exact Assistant configuration</h3>
+    <p>Build your custom AI assistant from scratch. But if you get stuck I'll send you my instructions and help you get your assistant up and running .</p>
   </section>
+
+  <!-- <section class="risk-reversal">
+    <h3>💯 30-Day Money-Back Guarantee</h3>
+    <p>If you're not completely satisfied with your AI Newsletter Assistant within 30 days, I'll refund every penny. No questions asked.</p>
+  </section> -->
 
   <footer>
-    <p>Need help? Contact <a href="mailto:support@yourdomain.com">help@coachcameronwilson.com</a></p>
+    <p>Need help? Contact <a href="mailto:help@coachcameronwilson.com">help@coachcameronwilson.com</a></p>
     <p>
-        <a href="terms.html">Terms</a> |
+      <a href="terms.html">Terms</a> |
       <a href="privacy.html">Privacy Policy</a> |
       <a href="refund.html">Refund Policy</a>
     </p>
