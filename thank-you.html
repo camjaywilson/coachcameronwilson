@@ -19,8 +19,14 @@
       flex-direction: column;
     }
     .container {
-      max-width: 700px;
       width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #gate {
+      max-width: 700px;
+      text-align: center;
     }
     h1 {
       font-size: 2rem;
@@ -48,11 +54,14 @@
       cursor: pointer;
     }
     iframe {
-      width: 700px;
-      max-width: 100%;
-      height: 450px;
+      width: 100vw;
+      height: 100vh;
       border: none;
-      margin-top: 2rem;
+      margin: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
     }
   </style>
 </head>
@@ -78,10 +87,12 @@
       const validKey = "coachai1375"; // Change to your actual key
 
       if (enteredKey === validKey) {
+        document.body.style.padding = "0";
+        document.body.style.margin = "0";
         document.getElementById("gate").style.display = "none";
         document.getElementById("content").style.display = "block";
       } else {
-        alert("Invalid key. If you believe this is an error, contact support@yourdomain.com.");
+        alert("Invalid key. If you believe this is an error, contact help@coachcameronwilson.com.");
       }
     }
   </script>
